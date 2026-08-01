@@ -36,12 +36,75 @@
 
 <body class="bg-[#f6eee1] font-sans text-[#191919] antialiased selection:bg-orange selection:text-white overflow-x-hidden">
 
+    <!-- ====== HEADER / NAVBAR BARU ====== -->
+    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-500 bg-[#354d35]/95 backdrop-blur-md shadow-lg" id="navbar">
+        <div class="max-w-[1000px] mx-auto px-6 md:px-10 py-4 flex items-center justify-between">
+            <!-- Logo dengan efek glitch -->
+            <a href="#" class="relative font-serif text-white text-xl md:text-2xl font-bold italic tracking-wide group">
+                <span class="relative z-10 hover:text-[#f9a400] transition-colors duration-300">
+                    Muhammad Yuan<span class="text-[#f9a400]">.</span>
+                </span>
+                <span class="absolute left-0.5 top-0 text-white opacity-0 group-hover:opacity-70 blur-[1px] transition-all duration-300 select-none pointer-events-none">
+                   Muhammad Yuan <span class="text-[#f9a400]">.</span>
+                </span>
+            </a>
+            
+            <!-- Navigation Menu -->
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="#about" class="nav-link text-white/80 hover:text-[#f9a400] text-sm font-medium transition-all duration-300 relative">
+                    Tentang
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#f9a400] transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#skills" class="nav-link text-white/80 hover:text-[#f9a400] text-sm font-medium transition-all duration-300 relative">
+                    Skills
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#f9a400] transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#organization" class="nav-link text-white/80 hover:text-[#f9a400] text-sm font-medium transition-all duration-300 relative">
+                    Organisasi
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#f9a400] transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#contact" class="nav-link text-white/80 hover:text-[#f9a400] text-sm font-medium transition-all duration-300 relative">
+                    Kontak
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#f9a400] transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </nav>
+
+            <!-- Tombol Hamburger Mobile -->
+            <button id="menu-toggle" class="md:hidden text-white focus:outline-none hover:text-[#f9a400] transition-colors">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden bg-[#354d35]/98 backdrop-blur-md hidden">
+            <div class="flex flex-col items-center gap-4 py-6">
+                <a href="#about" class="text-white/80 hover:text-[#f9a400] text-base font-medium transition-colors">Tentang</a>
+                <a href="#skills" class="text-white/80 hover:text-[#f9a400] text-base font-medium transition-colors">Skills</a>
+                <a href="#organization" class="text-white/80 hover:text-[#f9a400] text-base font-medium transition-colors">Organisasi</a>
+                <a href="#contact" class="text-white/80 hover:text-[#f9a400] text-base font-medium transition-colors">Kontak</a>
+            </div>
+        </div>
+    </header>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
     <div class="max-w-[1000px] mx-auto bg-beige shadow-2xl my-10 overflow-hidden rounded-lg">
         
-        <!-- SECTION 1: HEADER -->
-        <div class="px-8 md:px-14 pt-16 pb-12 flex flex-col md:flex-row gap-12 relative z-20">
+        <!-- SECTION 1: ABOUT -->
+        <div class="px-8 md:px-14 pt-16 pb-12 flex flex-col md:flex-row gap-12 relative z-20" id="about">
             <!-- Kiri -->
             <div class="flex-1 reveal-on-scroll">
+               <span class="font-serif text-[2.75rem] text-bold md:text-xl font-orange leading-tight tracking-tight text-orange mb-6">
+                       
+                </span>
                 <h1 class="font-serif text-[2.75rem] md:text-5xl font-black leading-tight tracking-tight text-black mb-6">
                     Muhammad Yuan<br>Kundalini Isma Putra
                 </h1>
@@ -51,7 +114,7 @@
             </div>
             
             <!-- Kanan: Foto & Kontak -->
-            <div class="w-full md:w-[320px] flex-shrink-0 flex flex-col parallax-elem reveal-on-scroll" data-speed="0.05">
+            <div class="w-full md:w-[320px] flex-shrink-0 flex flex-col parallax-elem reveal-on-scroll" data-speed="0.05" id="contact">
                 <div class="w-full h-[390px] bg-[#4a5f4c] overflow-hidden rounded-t-sm group">
                     <img src="./image/CV FOSITNAS.png" alt="Foto Profil" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                 </div>
@@ -79,8 +142,8 @@
             </div>
         </div>
 
-        <!-- SECTION 2: DARK GREEN BACKGROUND -->
-        <div class="bg-[#354d35] -mt-50 text-white px-8 md:px-14 py-16 relative z-10">
+        <!-- SECTION 2: SKILLS -->
+        <div class="bg-[#354d35] -mt-50 text-white px-8 md:px-14 py-16 relative z-10" id="skills">
             
             <!-- Ornamen ABOUT ME dengan Efek Parallax -->
             <div class="absolute right-0 -top-20 md:-top-28 pointer-events-none opacity-30 select-none flex flex-col items-end z-0 parallax-elem" data-speed="-0.15">
@@ -117,23 +180,23 @@
                         <div>
                             <h3 class="font-serif text-[#f9a400] font-bold text-xl mb-4 italic">Soft Skills</h3>
                             <ul class="space-y-3 text-[15px]">
-                                <li class="flex items-start"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Kepemimpinan</li>
-                                <li class="flex items-start"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Problem Solving</li>
-                                <li class="flex items-start"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Kerja Sama &amp; Tim</li>
-                                <li class="flex items-start"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Komunikasi</li>
-                                <li class="flex items-start"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Inisiatif</li>
-                                <li class="flex items-start"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Berpikir Kritis</li>
+                                <li class="flex items-start skill-item"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Kepemimpinan</li>
+                                <li class="flex items-start skill-item"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Problem Solving</li>
+                                <li class="flex items-start skill-item"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Kerja Sama &amp; Tim</li>
+                                <li class="flex items-start skill-item"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Komunikasi</li>
+                                <li class="flex items-start skill-item"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Inisiatif</li>
+                                <li class="flex items-start skill-item"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Berpikir Kritis</li>
                             </ul>
                         </div>
                         <!-- Hard Skills -->
                         <div>
                             <h3 class="font-serif font-bold text-xl mb-4 italic text-[#f9a400]">Hard Skills</h3>
                             <ul class="space-y-3 text-[15px]">
-                                <li class="flex items-start"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Manajemen Acara</li>
-                                <li class="flex items-start"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Produksi Konten</li>
-                                <li class="flex items-start"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Videography</li>
-                                <li class="flex items-start"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Basic Design</li>
-                                <li class="flex items-start"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Editing Foto &amp; Video</li>
+                                <li class="flex items-start skill-item"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Manajemen Acara</li>
+                                <li class="flex items-start skill-item"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Produksi Konten</li>
+                                <li class="flex items-start skill-item"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Videography</li>
+                                <li class="flex items-start skill-item"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Basic Design</li>
+                                <li class="flex items-start skill-item"><svg class="w-4 h-4 flex-shrink-0 mt-1 text-[#f9a400] mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Editing Foto &amp; Video</li>
                             </ul>
                         </div>
                     </div>
@@ -141,8 +204,8 @@
             </div>
         </div>
 
-        <!-- SECTION 3: BOTTOM BEIGE -->
-        <div class="bg-beige px-8 md:px-14 pb-16 relative">
+        <!-- SECTION 3: ORGANIZATION -->
+        <div class="bg-beige px-8 md:px-14 pb-16 relative" id="organization">
             <div class="flex flex-col md:flex-row gap-8 md:gap-16 relative">
                 
                 <!-- Kiri: Organisasi & Kepanitiaan -->
@@ -152,15 +215,15 @@
                     <div class="tilt-card bg-[#f9a400] text-black p-8 md:p-10 mb-10 w-full relative z-20 md:-mt-70 shadow-2xl rounded-sm xl:w-[110%] border border-black/10 reveal-on-scroll">
                         <h2 class="font-serif font-black text-3xl md:text-4xl mb-6 italic tracking-wide">Organisasi</h2>
                         <ul class="space-y-5 font-medium text-[15px]">
-                            <li class="flex items-start">
+                            <li class="flex items-start org-item">
                                 <svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-black mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z"/></svg>
                                 Staff Departemen Media dan Jurnalistik OSIA Masa Jihad 2025-2026
                             </li>
-                            <li class="flex items-start">
+                            <li class="flex items-start org-item">
                                 <svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-black mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z"/></svg>
                                 Staff Divisi Media Trayodasa - Angkatan 13 SMA IT Ibnu Abbas Klaten (2024-sekarang)
                             </li>
-                            <li class="flex items-start">
+                            <li class="flex items-start org-item">
                                 <svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-black mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z"/></svg>
                                 Koordinator Science Club SMPIT Ibnu Abbas Klaten
                             </li>
@@ -171,14 +234,14 @@
                     <div class="mt-4 pr-6 reveal-on-scroll">
                         <h2 class="font-serif font-black text-3xl md:text-4xl mb-6 italic tracking-wide text-black">Kepanitiaan</h2>
                         <ul class="space-y-4 text-[15px] font-medium text-gray-800">
-                            <li class="flex items-start"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Bendahara Lailatul Wada' (2024)</li>
-                            <li class="flex items-start"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Bendahara Stage of Talent 12 (2024)</li>
-                            <li class="flex items-start"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Ketua Divisi Media Kegiatan HUT RI-80 (2025)</li>
-                            <li class="flex items-start"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Ketua Divisi Media SIAGAMES XIII (2025)</li>
-                            <li class="flex items-start"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Ketua Divisi Media Bakti Sosial Trayodasa (2026)</li>
-                            <li class="flex items-start"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Staff Divisi Media Ibaska Ramadhan Festival (2026)</li>
-                            <li class="flex items-start"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Ketua Divisi Media Bakti Sosial OSIA (2026)</li>
-                            <li class="flex items-start"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Ketua Divisi Media Kajian Remaja Islam (2026)</li>
+                            <li class="flex items-start committee-item"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Bendahara Lailatul Wada' (2024)</li>
+                            <li class="flex items-start committee-item"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Bendahara Stage of Talent 12 (2024)</li>
+                            <li class="flex items-start committee-item"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Ketua Divisi Media Kegiatan HUT RI-80 (2025)</li>
+                            <li class="flex items-start committee-item"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Ketua Divisi Media SIAGAMES XIII (2025)</li>
+                            <li class="flex items-start committee-item"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Ketua Divisi Media Bakti Sosial Trayodasa (2026)</li>
+                            <li class="flex items-start committee-item"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Staff Divisi Media Ibaska Ramadhan Festival (2026)</li>
+                            <li class="flex items-start committee-item"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Ketua Divisi Media Bakti Sosial OSIA (2026)</li>
+                            <li class="flex items-start committee-item"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Ketua Divisi Media Kajian Remaja Islam (2026)</li>
                         </ul>
                     </div>
                 </div>
@@ -190,11 +253,11 @@
                     <div class="mb-14">
                         <h2 class="font-serif font-black text-2xl md:text-[1.7rem] mb-6 italic tracking-wide text-center text-black">Software Skills</h2>
                         <div class="flex flex-wrap justify-center gap-5">
-                            <img src="./image/Canva.png" alt="Canva" class="w-12 h-12 rounded-lg shadow-md hover:scale-125 hover:rotate-6 transition-all duration-300">
-                            <img src="./image/Premiere.png" alt="Premiere" class="w-12 h-12 rounded-lg shadow-md hover:scale-125 hover:-rotate-6 transition-all duration-300">
-                            <img src="./image/AE.png" alt="After Effects" class="w-12 h-12 rounded-lg shadow-md hover:scale-125 hover:rotate-6 transition-all duration-300">
-                            <img src="./image/Capcut.png" alt="Capcut" class="w-12 h-12 rounded-lg shadow-md hover:scale-125 hover:-rotate-6 transition-all duration-300">
-                            <img src="./image/VSCODE.png" alt="VS Code" class="w-12 h-12 rounded-lg shadow-md hover:scale-125 hover:rotate-6 transition-all duration-300">
+                            <img src="./image/Canva.png" alt="Canva" class="w-12 h-12 rounded-lg shadow-md hover:scale-125 hover:rotate-6 transition-all duration-300 software-icon">
+                            <img src="./image/Premiere.png" alt="Premiere" class="w-12 h-12 rounded-lg shadow-md hover:scale-125 hover:-rotate-6 transition-all duration-300 software-icon">
+                            <img src="./image/AE.png" alt="After Effects" class="w-12 h-12 rounded-lg shadow-md hover:scale-125 hover:rotate-6 transition-all duration-300 software-icon">
+                            <img src="./image/Capcut.png" alt="Capcut" class="w-12 h-12 rounded-lg shadow-md hover:scale-125 hover:-rotate-6 transition-all duration-300 software-icon">
+                            <img src="./image/VSCODE.png" alt="VS Code" class="w-12 h-12 rounded-lg shadow-md hover:scale-125 hover:rotate-6 transition-all duration-300 software-icon">
                         </div>
                     </div>
 
@@ -202,11 +265,11 @@
                     <div>
                         <h2 class="font-serif font-black text-2xl md:text-[1.7rem] mb-6 italic tracking-wide text-center text-black">Hobby &amp; Ketertarikan</h2>
                         <ul class="space-y-5 text-[15px] font-medium text-gray-800 px-4 md:px-0">
-                            <li class="flex items-start"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Videography</li>
-                            <li class="flex items-start"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Photography</li>
-                            <li class="flex items-start"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Kontribusi Sosial</li>
-                            <li class="flex items-start"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Olahraga</li>
-                            <li class="flex items-start"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Perkembangan Teknologi</li>
+                            <li class="flex items-start hobby-item"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Videography</li>
+                            <li class="flex items-start hobby-item"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Photography</li>
+                            <li class="flex items-start hobby-item"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Kontribusi Sosial</li>
+                            <li class="flex items-start hobby-item"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Olahraga</li>
+                            <li class="flex items-start hobby-item"><svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-[#f9a400] mr-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z"/></svg> Perkembangan Teknologi</li>
                         </ul>
                     </div>
 

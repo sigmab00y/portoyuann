@@ -6,7 +6,7 @@
     -webkit-text-stroke: 1px #f59e0b;
 }
 
-/* SCROLL REVEAL INITIAL STATES */
+/* ====== SCROLL REVEAL INITIAL STATES ====== */
 .reveal-on-scroll {
     opacity: 0;
     transform: translateY(40px);
@@ -14,13 +14,12 @@
     will-change: opacity, transform;
 }
 
-/* VISIBLE STATE WHEN SCROLLED TO */
 .reveal-on-scroll.is-visible {
     opacity: 1;
     transform: translateY(0);
 }
 
-/* 3D PERSPECTIVE CARD SETUP */
+/* ====== 3D PERSPECTIVE CARD SETUP ====== */
 .tilt-card {
     transform-style: preserve-3d;
     perspective: 1000px;
@@ -29,4 +28,153 @@
 
 .tilt-card:hover {
     box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.35);
+}
+
+/* ====== TEXT DISTORTION EFFECT ====== */
+.distortion-text {
+    position: relative;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.distortion-text::before,
+.distortion-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.distortion-text:hover::before {
+    opacity: 0.6;
+    color: #f9a400;
+    transform: translate(-3px, -2px) skewX(2deg);
+    text-shadow: 2px 0 #f59e0b, -2px 0 #354d35;
+}
+
+.distortion-text:hover::after {
+    opacity: 0.6;
+    color: #ffffff;
+    transform: translate(3px, 2px) skewX(-2deg);
+    text-shadow: -2px 0 #f59e0b, 2px 0 #354d35;
+}
+
+.distortion-text:hover {
+    text-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+}
+
+/* ====== TYPING ANIMATION ====== */
+.typing-container {
+    display: inline-block;
+    font-size: inherit;
+}
+
+.typing-text {
+    display: inline-block;
+    border-right: 2px solid #f9a400;
+    padding-right: 4px;
+    animation: blink-caret 0.7s step-end infinite;
+}
+
+.cursor-blink {
+    display: inline-block;
+    animation: blink-caret 0.7s step-end infinite;
+}
+
+@keyframes blink-caret {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* ====== NAV LINK UNDERLINE ====== */
+.nav-link {
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #f9a400;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* ====== SMOOTH SCROLL OFFSET ====== */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
+/* ====== RESPONSIVE FIXES ====== */
+@media (max-width: 768px) {
+    .distortion-text:hover::before,
+    .distortion-text:hover::after {
+        display: none;
+    }
+}
+
+/* ====== ANIMASI UNTUK ITEM LIST ====== */
+.skill-item,
+.org-item,
+.committee-item,
+.hobby-item,
+.software-icon {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: slideInLeft 0.5s ease forwards;
+}
+
+.skill-item:nth-child(1) { animation-delay: 0.1s; }
+.skill-item:nth-child(2) { animation-delay: 0.2s; }
+.skill-item:nth-child(3) { animation-delay: 0.3s; }
+.skill-item:nth-child(4) { animation-delay: 0.4s; }
+.skill-item:nth-child(5) { animation-delay: 0.5s; }
+.skill-item:nth-child(6) { animation-delay: 0.6s; }
+
+.org-item:nth-child(1) { animation-delay: 0.1s; }
+.org-item:nth-child(2) { animation-delay: 0.2s; }
+.org-item:nth-child(3) { animation-delay: 0.3s; }
+
+.committee-item:nth-child(1) { animation-delay: 0.1s; }
+.committee-item:nth-child(2) { animation-delay: 0.15s; }
+.committee-item:nth-child(3) { animation-delay: 0.2s; }
+.committee-item:nth-child(4) { animation-delay: 0.25s; }
+.committee-item:nth-child(5) { animation-delay: 0.3s; }
+.committee-item:nth-child(6) { animation-delay: 0.35s; }
+.committee-item:nth-child(7) { animation-delay: 0.4s; }
+.committee-item:nth-child(8) { animation-delay: 0.45s; }
+
+.hobby-item:nth-child(1) { animation-delay: 0.1s; }
+.hobby-item:nth-child(2) { animation-delay: 0.2s; }
+.hobby-item:nth-child(3) { animation-delay: 0.3s; }
+.hobby-item:nth-child(4) { animation-delay: 0.4s; }
+.hobby-item:nth-child(5) { animation-delay: 0.5s; }
+
+.software-icon:nth-child(1) { animation-delay: 0.1s; }
+.software-icon:nth-child(2) { animation-delay: 0.2s; }
+.software-icon:nth-child(3) { animation-delay: 0.3s; }
+.software-icon:nth-child(4) { animation-delay: 0.4s; }
+.software-icon:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
