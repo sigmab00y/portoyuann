@@ -5,21 +5,18 @@ document.addEventListener("DOMContentLoaded", () => {
     // ============================================================
     const intro = document.getElementById('intro');
     const enterBtn = document.getElementById('enter-btn');
-    const mainContent = document.getElementById('main-content');
 
     if (enterBtn && intro) {
         enterBtn.addEventListener('click', () => {
             intro.style.opacity = '0';
-            intro.style.transform = 'scale(1.1)';
+            intro.style.transform = 'scale(1.08)';
             setTimeout(() => {
                 intro.style.display = 'none';
                 document.body.style.overflow = 'auto';
-                // Trigger scroll reveal setelah intro hilang
                 window.dispatchEvent(new Event('scroll'));
             }, 800);
         });
 
-        // Scroll ke bawah untuk skip intro (optional)
         document.addEventListener('wheel', (e) => {
             if (e.deltaY > 20 && intro.style.display !== 'none') {
                 enterBtn.click();
@@ -50,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 revealObserver.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.1 });
     revealElements.forEach(el => revealObserver.observe(el));
 
     // ============================================================
@@ -61,8 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left - rect.width / 2;
             const y = e.clientY - rect.top - rect.height / 2;
-            const rotateX = (-y / rect.height) * 12;
-            const rotateY = (x / rect.width) * 12;
+            const rotateX = (-y / rect.height) * 10;
+            const rotateY = (x / rect.width) * 10;
             card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
         });
         card.addEventListener("mouseleave", () => {
@@ -77,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let lastScroll = 0;
     window.addEventListener('scroll', () => {
         const currentScroll = window.scrollY;
-        if (currentScroll > 100) {
+        if (currentScroll > 80) {
             navbar.style.transform = currentScroll > lastScroll ? 'translateY(-100%)' : 'translateY(0)';
         } else {
             navbar.style.transform = 'translateY(0)';
@@ -100,11 +97,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // ============================================================
     // 7. NAV LINK ACTIVE STATE
     // ============================================================
-    const sections = document.querySelectorAll('section[id], div[id]');
+    const sections = document.querySelectorAll('#about, #skills, #organization, #portfolio, #footer');
     const navLinks = document.querySelectorAll('.nav-link');
     window.addEventListener('scroll', () => {
         let current = '';
-        const scrollPos = window.scrollY + 120;
+        const scrollPos = window.scrollY + 100;
         sections.forEach(section => {
             const top = section.offsetTop;
             const height = section.offsetHeight;
@@ -114,16 +111,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         navLinks.forEach(link => {
             link.classList.remove('text-[#f9a400]');
-            link.classList.add('text-white/80');
+            link.classList.add('text-white/60');
             if (link.getAttribute('href') === `#${current}`) {
-                link.classList.remove('text-white/80');
+                link.classList.remove('text-white/60');
                 link.classList.add('text-[#f9a400]');
             }
         });
     });
 
     // ============================================================
-    // 8. PORTFOLIO SLIDESHOW
+    // 8. PORTFOLIO SLIDESHOW (AUTOSLIDE)
     // ============================================================
     const slides = document.querySelectorAll('.portfolio-slide');
     const dots = document.querySelectorAll('.dot-indicator');
@@ -131,6 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextBtn = document.getElementById('next-slide');
     let currentIndex = 0;
     const totalSlides = slides.length;
+    let autoSlideInterval;
 
     function showSlide(index) {
         if (index < 0) index = totalSlides - 1;
@@ -147,32 +145,52 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         dots.forEach((dot, i) => {
-            dot.classList.remove('bg-[#f9a400]', 'bg-white/30');
-            dot.classList.add(i === currentIndex ? 'bg-[#f9a400]' : 'bg-white/30');
+            dot.classList.remove('bg-[#f9a400]', 'bg-white/20');
+            dot.classList.add(i === currentIndex ? 'bg-[#f9a400]' : 'bg-white/20');
         });
+    }
+
+    function startAutoSlide() {
+        if (autoSlideInterval) clearInterval(autoSlideInterval);
+        autoSlideInterval = setInterval(() => showSlide(currentIndex + 1), 4000);
+    }
+
+    function stopAutoSlide() {
+        if (autoSlideInterval) {
+            clearInterval(autoSlideInterval);
+            autoSlideInterval = null;
+        }
     }
 
     if (prevBtn && nextBtn) {
-        prevBtn.addEventListener('click', () => showSlide(currentIndex - 1));
-        nextBtn.addEventListener('click', () => showSlide(currentIndex + 1));
-    }
-
-    dots.forEach((dot, i) => {
-        dot.addEventListener('click', () => showSlide(i));
-    });
-
-    // Auto slide
-    let autoSlideInterval = setInterval(() => showSlide(currentIndex + 1), 5000);
-
-    const sliderContainer = document.querySelector('.glass-card');
-    if (sliderContainer) {
-        sliderContainer.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
-        sliderContainer.addEventListener('mouseleave', () => {
-            autoSlideInterval = setInterval(() => showSlide(currentIndex + 1), 5000);
+        prevBtn.addEventListener('click', () => {
+            stopAutoSlide();
+            showSlide(currentIndex - 1);
+            startAutoSlide();
+        });
+        nextBtn.addEventListener('click', () => {
+            stopAutoSlide();
+            showSlide(currentIndex + 1);
+            startAutoSlide();
         });
     }
 
+    dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+            stopAutoSlide();
+            showSlide(i);
+            startAutoSlide();
+        });
+    });
+
+    const sliderContainer = document.querySelector('#portfolio .glass-card');
+    if (sliderContainer) {
+        sliderContainer.addEventListener('mouseenter', stopAutoSlide);
+        sliderContainer.addEventListener('mouseleave', startAutoSlide);
+    }
+
     showSlide(0);
+    startAutoSlide();
 
     console.log('✨ Portfolio Muhammad Yuan - Loaded Successfully!');
 });
