@@ -1,8 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // ============================================================
-    // 1. INTRO / LANDING PAGE
-    // ============================================================
     const intro = document.getElementById('intro');
     const enterBtn = document.getElementById('enter-btn');
 
@@ -24,52 +21,42 @@ document.addEventListener("DOMContentLoaded", () => {
         }, { passive: true });
     }
 
-    // ============================================================
-    // 2. PARALLAX SCROLL
-    // ============================================================
     const parallaxElements = document.querySelectorAll(".parallax-elem");
     window.addEventListener("scroll", () => {
         const scrolled = window.scrollY;
+        const windowHeight = window.innerHeight;
         parallaxElements.forEach((el) => {
             const speed = parseFloat(el.getAttribute("data-speed")) || 0.1;
-            el.style.transform = `translateY(${scrolled * speed}px)`;
+            const direction = el.getAttribute("data-direction") || "up";
+            const rect = el.getBoundingClientRect();
+            const centerPoint = rect.top + rect.height / 2;
+            const viewportCenter = windowHeight / 2;
+            const offset = (centerPoint - viewportCenter) / windowHeight;
+            
+            let translateY;
+            if (direction === "up") {
+                translateY = scrolled * speed + offset * 30;
+            } else {
+                translateY = -scrolled * speed + offset * 30;
+            }
+            el.style.transform = `translateY(${translateY}px)`;
         });
     });
 
-    // ============================================================
-    // 3. SCROLL REVEAL
-    // ============================================================
     const revealElements = document.querySelectorAll(".reveal-on-scroll");
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add("is-visible");
+                const delay = parseFloat(entry.target.getAttribute('data-delay')) || 0;
+                setTimeout(() => {
+                    entry.target.classList.add("is-visible");
+                }, delay * 1000);
                 revealObserver.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
     revealElements.forEach(el => revealObserver.observe(el));
 
-    // ============================================================
-    // 4. 3D TILT CARD
-    // ============================================================
-    document.querySelectorAll(".tilt-card").forEach(card => {
-        card.addEventListener("mousemove", (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            const rotateX = (-y / rect.height) * 10;
-            const rotateY = (x / rect.width) * 10;
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-        });
-        card.addEventListener("mouseleave", () => {
-            card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
-        });
-    });
-
-    // ============================================================
-    // 5. NAVBAR HIDE/SHOW
-    // ============================================================
     const navbar = document.getElementById('navbar');
     let lastScroll = 0;
     window.addEventListener('scroll', () => {
@@ -82,9 +69,40 @@ document.addEventListener("DOMContentLoaded", () => {
         lastScroll = currentScroll;
     });
 
-    // ============================================================
-    // 6. MOBILE MENU TOGGLE
-    // ============================================================
+    const progressBar = document.querySelector('.scroll-progress');
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (scrollTop / docHeight) * 100;
+        progressBar.style.width = progress + '%';
+    });
+
+    const counters = document.querySelectorAll('.counter');
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = parseInt(entry.target.getAttribute('data-target'));
+                let current = 0;
+                const increment = Math.ceil(target / 40);
+                const duration = 1200;
+                const stepTime = duration / 40;
+
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    entry.target.textContent = current;
+                }, stepTime);
+
+                counterObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => counterObserver.observe(counter));
+
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     if (menuToggle && mobileMenu) {
@@ -94,10 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ============================================================
-    // 7. NAV LINK ACTIVE STATE
-    // ============================================================
-    const sections = document.querySelectorAll('#about, #skills, #organization, #portfolio, #footer');
+    const sections = document.querySelectorAll('#about, #stats, #data-diri, #skills, #organisasi, #kepanitiaan, #hobby, #portfolio, #footer');
     const navLinks = document.querySelectorAll('.nav-link');
     window.addEventListener('scroll', () => {
         let current = '';
@@ -119,9 +134,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // ============================================================
-    // 8. PORTFOLIO SLIDESHOW (AUTOSLIDE)
-    // ============================================================
     const slides = document.querySelectorAll('.portfolio-slide');
     const dots = document.querySelectorAll('.dot-indicator');
     const prevBtn = document.getElementById('prev-slide');
@@ -147,6 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
         dots.forEach((dot, i) => {
             dot.classList.remove('bg-[#f9a400]', 'bg-white/20');
             dot.classList.add(i === currentIndex ? 'bg-[#f9a400]' : 'bg-white/20');
+            dot.style.transform = i === currentIndex ? 'scale(1.3)' : 'scale(1)';
         });
     }
 
@@ -166,12 +179,12 @@ document.addEventListener("DOMContentLoaded", () => {
         prevBtn.addEventListener('click', () => {
             stopAutoSlide();
             showSlide(currentIndex - 1);
-            startAutoSlide();
+            setTimeout(startAutoSlide, 3000);
         });
         nextBtn.addEventListener('click', () => {
             stopAutoSlide();
             showSlide(currentIndex + 1);
-            startAutoSlide();
+            setTimeout(startAutoSlide, 3000);
         });
     }
 
@@ -179,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
         dot.addEventListener('click', () => {
             stopAutoSlide();
             showSlide(i);
-            startAutoSlide();
+            setTimeout(startAutoSlide, 3000);
         });
     });
 
@@ -192,5 +205,116 @@ document.addEventListener("DOMContentLoaded", () => {
     showSlide(0);
     startAutoSlide();
 
-    console.log('✨ Portfolio Muhammad Yuan - Loaded Successfully!');
+    const canvas = document.getElementById('particles-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let animationId;
+        let mouseX = -1000;
+        let mouseY = -1000;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.opacity = Math.random() * 0.3 + 0.1;
+                this.originalX = this.x;
+                this.originalY = this.y;
+            }
+
+            update() {
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                
+                if (dist < 150) {
+                    const force = (150 - dist) / 150 * 0.5;
+                    this.x -= dx / dist * force;
+                    this.y -= dy / dist * force;
+                    this.opacity = Math.min(this.opacity + 0.01, 0.6);
+                } else {
+                    this.x += (this.originalX - this.x) * 0.02;
+                    this.y += (this.originalY - this.y) * 0.02;
+                    this.opacity = Math.max(this.opacity - 0.002, 0.1);
+                }
+
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+                this.originalX = this.x;
+                this.originalY = this.y;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(249, 164, 0, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle());
+        }
+
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 180) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        const opacity = 0.08 * (1 - distance / 180);
+                        ctx.strokeStyle = `rgba(249, 164, 0, ${opacity})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            connectParticles();
+            animationId = requestAnimationFrame(animateParticles);
+        }
+
+        animateParticles();
+
+        const mainContent = document.getElementById('main-content');
+        if (mainContent) {
+            const observer = new MutationObserver(() => {
+                if (intro.style.display === 'none') {
+                    canvas.style.opacity = '1';
+                }
+            });
+            observer.observe(intro, { attributes: true, attributeFilter: ['style'] });
+        }
+    }
+
 });
