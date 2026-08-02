@@ -1,101 +1,35 @@
-@import "tailwindcss";
-
-/* TEXT OUTLINE STYLE */
+/* ====== TEXT OUTLINE ====== */
 .text-outline {
     color: transparent;
     -webkit-text-stroke: 1px #f59e0b;
 }
 
-/* ====== SCROLL REVEAL INITIAL STATES ====== */
+/* ====== SCROLL REVEAL ====== */
 .reveal-on-scroll {
     opacity: 0;
     transform: translateY(40px);
     transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     will-change: opacity, transform;
 }
-
 .reveal-on-scroll.is-visible {
     opacity: 1;
     transform: translateY(0);
 }
 
-/* ====== 3D PERSPECTIVE CARD SETUP ====== */
+/* ====== 3D TILT CARD ====== */
 .tilt-card {
     transform-style: preserve-3d;
     perspective: 1000px;
     transition: transform 0.15s ease-out, box-shadow 0.3s ease;
 }
-
 .tilt-card:hover {
     box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.35);
 }
 
-/* ====== TEXT DISTORTION EFFECT ====== */
-.distortion-text {
-    position: relative;
-    display: inline-block;
-    transition: all 0.3s ease;
-}
-
-.distortion-text::before,
-.distortion-text::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    opacity: 0;
-    transition: all 0.3s ease;
-}
-
-.distortion-text:hover::before {
-    opacity: 0.6;
-    color: #f9a400;
-    transform: translate(-3px, -2px) skewX(2deg);
-    text-shadow: 2px 0 #f59e0b, -2px 0 #354d35;
-}
-
-.distortion-text:hover::after {
-    opacity: 0.6;
-    color: #ffffff;
-    transform: translate(3px, 2px) skewX(-2deg);
-    text-shadow: -2px 0 #f59e0b, 2px 0 #354d35;
-}
-
-.distortion-text:hover {
-    text-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
-}
-
-/* ====== TYPING ANIMATION ====== */
-.typing-container {
-    display: inline-block;
-    font-size: inherit;
-}
-
-.typing-text {
-    display: inline-block;
-    border-right: 2px solid #f9a400;
-    padding-right: 4px;
-    animation: blink-caret 0.7s step-end infinite;
-}
-
-.cursor-blink {
-    display: inline-block;
-    animation: blink-caret 0.7s step-end infinite;
-}
-
-@keyframes blink-caret {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
-
-/* ====== NAV LINK UNDERLINE ====== */
+/* ====== NAV LINK ====== */
 .nav-link {
     position: relative;
 }
-
 .nav-link::after {
     content: '';
     position: absolute;
@@ -106,26 +40,17 @@
     background-color: #f9a400;
     transition: width 0.3s ease;
 }
-
 .nav-link:hover::after {
     width: 100%;
 }
 
-/* ====== SMOOTH SCROLL OFFSET ====== */
+/* ====== SMOOTH SCROLL ====== */
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
 }
 
-/* ====== RESPONSIVE FIXES ====== */
-@media (max-width: 768px) {
-    .distortion-text:hover::before,
-    .distortion-text:hover::after {
-        display: none;
-    }
-}
-
-/* ====== ANIMASI UNTUK ITEM LIST ====== */
+/* ====== LIST ANIMATIONS ====== */
 .skill-item,
 .org-item,
 .committee-item,
@@ -135,7 +60,6 @@ html {
     transform: translateX(-20px);
     animation: slideInLeft 0.5s ease forwards;
 }
-
 .skill-item:nth-child(1) { animation-delay: 0.1s; }
 .skill-item:nth-child(2) { animation-delay: 0.2s; }
 .skill-item:nth-child(3) { animation-delay: 0.3s; }
@@ -177,4 +101,67 @@ html {
         opacity: 1;
         transform: translateX(0);
     }
+}
+
+/* ====== GLASSMORPHISM ====== */
+.glass-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* ====== INTRO ANIMATIONS ====== */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-up {
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+}
+
+.animate-fade-down {
+    opacity: 0;
+    animation: fadeDown 0.6s ease forwards;
+}
+
+/* ====== PORTFOLIO SLIDE ====== */
+.portfolio-slide {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.portfolio-slide.visible-slide {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 2;
+    position: relative;
+}
+
+.portfolio-slide.hidden-slide {
+    opacity: 0;
+    transform: scale(0.95);
+    z-index: 1;
+    pointer-events: none;
 }
