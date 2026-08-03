@@ -317,7 +317,7 @@ if (contactForm) {
             return;
         }
         
-        const subject = `Pesan dari ${name} - CV Yuan`;
+        const subject = `Pesan dari ${name} - Yuan`;
         const body = `Nama: ${name}%0AEmail: ${email}%0A%0APesan:%0A${message}`;
         
         window.location.href = `mailto:muhammadyuanisma@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
