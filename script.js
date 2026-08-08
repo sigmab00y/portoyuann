@@ -552,3 +552,57 @@ function createParticles() {
     }
 }
 createParticles();
+
+// Email Sender Function
+(function() {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+    script.async = true;
+    script.onload = function() {
+        emailjs.init('JOli6OA0RA_0BFyV1');
+    };
+    document.head.appendChild(script);
+})();
+
+const contactForm = document.getElementById('contact-form');
+const submitBtn = document.getElementById('submit-btn');
+const btnText = document.getElementById('btn-text');
+const btnSpinner = document.getElementById('btn-spinner');
+const formStatus = document.getElementById('form-status');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        btnText.textContent = 'Sending...';
+        btnSpinner.classList.remove('hidden');
+        submitBtn.disabled = true;
+        formStatus.className = 'text-center text-sm hidden';
+
+        const serviceID = 'service_qcolxjk';
+        const templateID = 'template_k39xaxe';
+
+        emailjs.sendForm(serviceID, templateID, this)
+            .then(() => {
+                btnText.textContent = 'Sent! ✅';
+                btnSpinner.classList.add('hidden');
+                submitBtn.disabled = false;
+                formStatus.className = 'text-center text-sm text-green-600 mt-3';
+                formStatus.textContent = 'Message sent successfully!';
+                contactForm.reset();
+
+                setTimeout(() => {
+                    btnText.textContent = 'Send Message';
+                    formStatus.className = 'text-center text-sm hidden';
+                }, 5000);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                btnText.textContent = 'Send Message';
+                btnSpinner.classList.add('hidden');
+                submitBtn.disabled = false;
+                formStatus.className = 'text-center text-sm text-red-500 mt-3';
+                formStatus.textContent = 'Failed to send message. Please try again.';
+            });
+    });
+}
