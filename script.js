@@ -1,4 +1,3 @@
-/* script.js */
 document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -50,6 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const dots = document.querySelectorAll('.slide-dot');
     const prevBtn = document.getElementById('prev-slide');
     const nextBtn = document.getElementById('next-slide');
+    const prevBtnInside = document.getElementById('prev-slide-inside');
+    const nextBtnInside = document.getElementById('next-slide-inside');
     let currentIndex = 0;
     let autoSlide;
 
@@ -80,18 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInterval(autoSlide);
     }
 
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            prevSlide();
-            startAutoSlide();
-        });
-    }
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            nextSlide();
-            startAutoSlide();
-        });
-    }
+    if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); startAutoSlide(); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); startAutoSlide(); });
+    if (prevBtnInside) prevBtnInside.addEventListener('click', () => { prevSlide(); startAutoSlide(); });
+    if (nextBtnInside) nextBtnInside.addEventListener('click', () => { nextSlide(); startAutoSlide(); });
 
     dots.forEach((dot, i) => {
         dot.addEventListener('click', () => {
@@ -108,36 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     showSlide(0);
     startAutoSlide();
-
-    const navbar = document.getElementById('navbar');
-    let lastScroll = 0;
-
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.scrollY;
-        if (currentScroll > 80) {
-            navbar.classList.toggle('hidden-nav', currentScroll > lastScroll);
-        } else {
-            navbar.classList.remove('hidden-nav');
-        }
-        lastScroll = currentScroll;
-    });
-
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (menuToggle) {
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-    }
-
-    if (mobileMenu) {
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
-        });
-    }
 
 });
 
