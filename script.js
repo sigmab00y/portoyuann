@@ -45,6 +45,112 @@ document.addEventListener('DOMContentLoaded', () => {
 
     counters.forEach(counter => counterObserver.observe(counter));
 
+
+
+    const videoControls = {};
+
+    document.querySelectorAll('.portfolio-video').forEach(function(video) {
+        const videoId = video.id;
+        const slide = video.closest('.portfolio-slide');
+        const playBtn = slide ? slide.querySelector('.video-play-btn') : null;
+        const progress = slide ? slide.querySelector('.video-progress') : null;
+        const muteBtn = slide ? slide.querySelector('.video-mute-btn') : null;
+        const timeDisplay = slide ? slide.querySelector('.video-time') : null;
+
+        if (!videoId) return;
+
+        videoControls[videoId] = {
+            element: video,
+            playBtn: playBtn,
+            progress: progress,
+            muteBtn: muteBtn,
+            timeDisplay: timeDisplay,
+            isMuted: true
+        };
+
+        video.muted = true;
+
+        video.addEventListener('timeupdate', function() {
+            if (this.duration) {
+                const percent = (this.currentTime / this.duration) * 100;
+                if (progress) progress.value = percent;
+
+                if (timeDisplay) {
+                    const formatTime = function(seconds) {
+                        if (!seconds || isNaN(seconds)) return '0:00';
+                        const mins = Math.floor(seconds / 60);
+                        const secs = Math.floor(seconds % 60);
+                        return mins + ':' + (secs < 10 ? '0' : '') + secs;
+                    };
+                    timeDisplay.textContent = formatTime(this.currentTime) + ' / ' + formatTime(this.duration);
+                }
+            }
+        });
+
+        if (playBtn) {
+            playBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const videoEl = videoControls[videoId].element;
+
+                if (videoEl.paused) {
+                    Object.keys(videoControls).forEach(function(id) {
+                        if (id !== videoId) {
+                            videoControls[id].element.pause();
+                            if (videoControls[id].playBtn) {
+                                videoControls[id].playBtn.textContent = '▶';
+                            }
+                        }
+                    });
+
+                    videoEl.muted = false;
+                    videoControls[videoId].isMuted = false;
+                    if (muteBtn) muteBtn.textContent = '🔊';
+
+                    videoEl.play().catch(function() {});
+                    playBtn.textContent = '⏸';
+                } else {
+                    videoEl.pause();
+                    playBtn.textContent = '▶';
+                }
+            });
+        }
+
+        if (progress) {
+            progress.addEventListener('input', function() {
+                const videoEl = videoControls[videoId].element;
+                if (videoEl.duration) {
+                    videoEl.currentTime = (this.value / 100) * videoEl.duration;
+                }
+            });
+        }
+
+        if (muteBtn) {
+            muteBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const videoEl = videoControls[videoId].element;
+                videoEl.muted = !videoEl.muted;
+                videoControls[videoId].isMuted = videoEl.muted;
+                muteBtn.textContent = videoEl.muted ? '🔇' : '🔊';
+
+                if (!videoEl.muted) {
+                    Object.keys(videoControls).forEach(function(id) {
+                        if (id !== videoId) {
+                            videoControls[id].element.muted = true;
+                            videoControls[id].isMuted = true;
+                            if (videoControls[id].muteBtn) {
+                                videoControls[id].muteBtn.textContent = '🔇';
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        video.addEventListener('click', function() {
+            if (playBtn) playBtn.click();
+        });
+    });
+
     const slides = document.querySelectorAll('.portfolio-slide');
     const dots = document.querySelectorAll('.slide-dot');
     const prevBtn = document.getElementById('prev-slide');
@@ -54,41 +160,76 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentIndex = 0;
     let autoSlide;
 
-    function showSlide(index) {
-        slides.forEach((slide, i) => {
+    function goToSlide(index) {
+
+        Object.keys(videoControls).forEach(function(id) {
+            if (videoControls[id].element) {
+                videoControls[id].element.pause();
+                if (videoControls[id].playBtn) {
+                    videoControls[id].playBtn.textContent = '▶';
+                }
+            }
+        });
+
+        slides.forEach(function(slide, i) {
             slide.classList.toggle('active', i === index);
         });
-        dots.forEach((dot, i) => {
+
+        dots.forEach(function(dot, i) {
             dot.classList.toggle('active', i === index);
         });
+
         currentIndex = index;
+
+        setTimeout(function() {
+            const activeSlide = document.querySelector('.portfolio-slide.active');
+            if (activeSlide) {
+                const video = activeSlide.querySelector('.portfolio-video');
+                if (video && video.id) {
+                    const v = videoControls[video.id];
+                    if (v) {
+                        if (video.currentTime >= video.duration - 0.1) {
+                            video.currentTime = 0;
+                        }
+                        video.muted = false;
+                        v.isMuted = false;
+                        if (v.muteBtn) v.muteBtn.textContent = '🔊';
+                        video.play().catch(function() {});
+                        if (v.playBtn) v.playBtn.textContent = '⏸';
+                    }
+                }
+            }
+        }, 300);
     }
 
     function nextSlide() {
-        showSlide((currentIndex + 1) % slides.length);
+        goToSlide((currentIndex + 1) % slides.length);
     }
 
     function prevSlide() {
-        showSlide((currentIndex - 1 + slides.length) % slides.length);
+        goToSlide((currentIndex - 1 + slides.length) % slides.length);
     }
 
     function startAutoSlide() {
-        stopAutoSlide();
-        autoSlide = setInterval(nextSlide, 4000);
+        if (autoSlide) clearInterval(autoSlide);
+        autoSlide = setInterval(nextSlide, 5000);
     }
 
     function stopAutoSlide() {
-        clearInterval(autoSlide);
+        if (autoSlide) {
+            clearInterval(autoSlide);
+            autoSlide = null;
+        }
     }
 
-    if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); startAutoSlide(); });
-    if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); startAutoSlide(); });
-    if (prevBtnInside) prevBtnInside.addEventListener('click', () => { prevSlide(); startAutoSlide(); });
-    if (nextBtnInside) nextBtnInside.addEventListener('click', () => { nextSlide(); startAutoSlide(); });
+    if (prevBtn) prevBtn.addEventListener('click', function() { prevSlide(); startAutoSlide(); });
+    if (nextBtn) nextBtn.addEventListener('click', function() { nextSlide(); startAutoSlide(); });
+    if (prevBtnInside) prevBtnInside.addEventListener('click', function() { prevSlide(); startAutoSlide(); });
+    if (nextBtnInside) nextBtnInside.addEventListener('click', function() { nextSlide(); startAutoSlide(); });
 
-    dots.forEach((dot, i) => {
-        dot.addEventListener('click', () => {
-            showSlide(i);
+    dots.forEach(function(dot, i) {
+        dot.addEventListener('click', function() {
+            goToSlide(i);
             startAutoSlide();
         });
     });
@@ -99,8 +240,18 @@ document.addEventListener('DOMContentLoaded', () => {
         slider.addEventListener('mouseleave', startAutoSlide);
     }
 
-    showSlide(0);
+    goToSlide(0);
     startAutoSlide();
+
+    document.querySelectorAll('.gallery-item').forEach(function(item) {
+        item.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.02)';
+            this.style.transition = 'transform 0.3s ease';
+        });
+        item.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
 
 });
 
