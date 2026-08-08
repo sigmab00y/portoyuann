@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (this.duration) {
                 const percent = (this.currentTime / this.duration) * 100;
                 if (v.progress) v.progress.value = percent;
-
+                
                 const formatTime = (seconds) => {
                     const mins = Math.floor(seconds / 60);
                     const secs = Math.floor(seconds % 60);
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
             v.playBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 const video = v.element;
-
+                
                 if (video.paused) {
                     Object.keys(videos).forEach(id => {
                         if (id !== videoId) {
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (videos[id].playBtn) videos[id].playBtn.textContent = '▶';
                         }
                     });
-
+                    
                     Object.keys(videos).forEach(id => {
                         if (id !== videoId) {
                             videos[id].element.muted = true;
@@ -150,11 +150,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             videos[id].isMuted = true;
                         }
                     });
-
+                    
                     video.muted = false;
                     v.isMuted = false;
                     if (v.muteBtn) v.muteBtn.textContent = '🔊';
-
+                    
                     video.play();
                     this.textContent = '⏸';
                 } else {
@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 v.element.muted = !v.element.muted;
                 v.isMuted = v.element.muted;
                 this.textContent = v.element.muted ? '🔇' : '🔊';
-
+                
                 if (!v.element.muted) {
                     Object.keys(videos).forEach(id => {
                         if (id !== videoId) {
@@ -224,11 +224,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (video.currentTime >= video.duration - 0.1) {
                             video.currentTime = 0;
                         }
-
+                        
                         video.muted = false;
                         v.isMuted = false;
                         if (v.muteBtn) v.muteBtn.textContent = '🔊';
-
+                        
                         Object.keys(videos).forEach(id => {
                             if (id !== videoId) {
                                 videos[id].element.muted = true;
@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 if (videos[id].muteBtn) videos[id].muteBtn.textContent = '🔇';
                             }
                         });
-
+                        
                         video.play().catch(() => {});
                         if (v.playBtn) v.playBtn.textContent = '⏸';
                     }
@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (portfolioSection) {
             const rect = portfolioSection.getBoundingClientRect();
             const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-
+            
             if (isVisible) {
                 if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
                     e.preventDefault();
@@ -307,23 +307,23 @@ const contactForm = document.getElementById('contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
-
+        
         const name = document.getElementById('name').value.trim();
         const email = document.getElementById('email').value.trim();
         const message = document.getElementById('message').value.trim();
-
+        
         if (!name || !email || !message) {
             alert('Harap isi semua field!');
             return;
         }
-
+        
         const subject = `Pesan dari ${name} - Yuan`;
         const body = `Nama: ${name}%0AEmail: ${email}%0A%0APesan:%0A${message}`;
-
+        
         window.location.href = `mailto:muhammadyuanisma@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
-
+        
         contactForm.reset();
-
+        
         const btn = contactForm.querySelector('button[type="submit"]');
         const originalText = btn.textContent;
         btn.textContent = '✅ Terkirim!';
@@ -347,7 +347,7 @@ window.addEventListener('scroll', () => {
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const progress = (scrollTop / docHeight) * 100;
     progressBar.style.width = progress + '%';
-
+    
     if (scrollTop > lastScrollY) {
         scrollDirection = 'down';
     } else if (scrollTop < lastScrollY) {
@@ -375,10 +375,10 @@ if (aboutImg) {
         const centerY = rect.top + rect.height / 2;
         const viewportCenter = window.innerHeight / 2;
         const offset = (centerY - viewportCenter) * 0.05;
-
+        
         const directionMultiplier = scrollDirection === 'up' ? 1.8 : 1;
         const finalOffset = offset * directionMultiplier;
-
+        
         aboutImg.style.transform = `translateY(${finalOffset}px) scale(${1 + Math.abs(finalOffset) * 0.0005})`;
         aboutImg.style.boxShadow = `0 ${20 + Math.abs(finalOffset) * 0.5}px 40px rgba(0,0,0,${0.05 + Math.abs(finalOffset) * 0.001})`;
         aboutImg.style.transition = 'transform 0.05s ease-out, box-shadow 0.05s ease-out';
@@ -392,10 +392,10 @@ statCards.forEach((card, index) => {
         const centerY = rect.top + rect.height / 2;
         const viewportCenter = window.innerHeight / 2;
         const offset = (centerY - viewportCenter) * 0.03;
-
+        
         const directionMultiplier = scrollDirection === 'up' ? 2 : 1;
         const finalOffset = offset * (1 + index * 0.1) * directionMultiplier;
-
+        
         card.style.transform = `translateY(${finalOffset}px) rotateX(${offset * 0.02 * directionMultiplier}deg)`;
         card.style.transition = 'transform 0.05s ease-out';
     });
@@ -408,10 +408,10 @@ skillCards.forEach((card) => {
         const centerY = rect.top + rect.height / 2;
         const viewportCenter = window.innerHeight / 2;
         const offset = (centerY - viewportCenter) * 0.04;
-
+        
         const directionMultiplier = scrollDirection === 'up' ? 2.5 : 1;
         const finalOffset = offset * directionMultiplier;
-
+        
         card.style.transform = `perspective(800px) rotateY(${finalOffset * 0.05}deg) translateY(${finalOffset * 0.2}px)`;
         card.style.transition = 'transform 0.05s ease-out';
     });
@@ -424,10 +424,10 @@ if (sliderWrapper) {
         const centerY = rect.top + rect.height / 2;
         const viewportCenter = window.innerHeight / 2;
         const offset = (centerY - viewportCenter) * 0.02;
-
+        
         const directionMultiplier = scrollDirection === 'up' ? 2 : 1;
         const finalOffset = offset * directionMultiplier;
-
+        
         sliderWrapper.style.transform = `perspective(1000px) rotateX(${finalOffset * 0.03}deg) translateY(${finalOffset * 0.1}px)`;
         sliderWrapper.style.transition = 'transform 0.05s ease-out';
     });
@@ -440,11 +440,11 @@ sections.forEach((section) => {
         const centerY = rect.top + rect.height / 2;
         const viewportCenter = window.innerHeight / 2;
         const offset = (centerY - viewportCenter) * 0.015;
-
+        
         const directionMultiplier = scrollDirection === 'up' ? 2 : 1;
         const finalOffset = offset * directionMultiplier;
         const opacity = 1 - Math.abs(finalOffset) * 0.003;
-
+        
         section.style.transform = `translateY(${finalOffset * 0.1}px)`;
         section.style.opacity = Math.max(0.85, opacity);
         section.style.transition = 'transform 0.05s ease-out, opacity 0.05s ease-out';
@@ -457,9 +457,9 @@ if (footer) {
         const rect = footer.getBoundingClientRect();
         const bottom = rect.bottom;
         const viewportHeight = window.innerHeight;
-
+        
         const directionMultiplier = scrollDirection === 'up' ? 2 : 1;
-
+        
         if (bottom < viewportHeight) {
             const offset = (viewportHeight - bottom) * 0.1;
             const finalOffset = offset * directionMultiplier;
@@ -477,11 +477,11 @@ hobbyItems.forEach((item, index) => {
         const centerY = rect.top + rect.height / 2;
         const viewportCenter = window.innerHeight / 2;
         const offset = (centerY - viewportCenter) * 0.02;
-
+        
         const directionMultiplier = scrollDirection === 'up' ? 2 : 1;
         const finalOffset = offset * directionMultiplier;
         const delay = index * 0.05;
-
+        
         item.style.transform = `translateY(${finalOffset * 0.5}px) scale(${1 - Math.abs(finalOffset) * 0.0003})`;
         item.style.transition = `transform 0.05s ease-out ${delay}s`;
     });
@@ -494,10 +494,10 @@ if (dataDiri) {
         const centerY = rect.top + rect.height / 2;
         const viewportCenter = window.innerHeight / 2;
         const offset = (centerY - viewportCenter) * 0.03;
-
+        
         const directionMultiplier = scrollDirection === 'up' ? 2 : 1;
         const finalOffset = offset * directionMultiplier;
-
+        
         dataDiri.style.transform = `translateY(${finalOffset * 0.3}px) rotateX(${finalOffset * 0.01}deg)`;
         dataDiri.style.transition = 'transform 0.05s ease-out';
     });
@@ -510,11 +510,11 @@ orgItems.forEach((item, index) => {
         const centerY = rect.top + rect.height / 2;
         const viewportCenter = window.innerHeight / 2;
         const offset = (centerY - viewportCenter) * 0.02;
-
+        
         const directionMultiplier = scrollDirection === 'up' ? 2 : 1;
         const finalOffset = offset * directionMultiplier;
         const delay = index * 0.02;
-
+        
         item.style.transform = `translateX(${finalOffset * 0.2 * (index % 2 === 0 ? 1 : -1)}px) translateY(${finalOffset * 0.2}px)`;
         item.style.transition = `transform 0.05s ease-out ${delay}s`;
     });
@@ -552,50 +552,3 @@ function createParticles() {
     }
 }
 createParticles();
-
-(function() {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-    script.async = true;
-    script.onload = function() {
-        emailjs.init('JOli6OA0RA_0BFyV1');
-    };
-    document.head.appendChild(script);
-})();
-const contactForm = document.getElementById('contact-form');
-const submitBtn = document.getElementById('submit-btn');
-const btnText = document.getElementById('btn-text');
-const btnSpinner = document.getElementById('btn-spinner');
-const formStatus = document.getElementById('form-status');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        btnText.textContent = 'Sending...';
-        btnSpinner.classList.remove('hidden');
-        submitBtn.disabled = true;
-        formStatus.className = 'text-center text-sm hidden';
-        const serviceID = 'service_qcolxjk';
-        const templateID = 'template_k39xaxe';
-        emailjs.sendForm(serviceID, templateID, this)
-            .then(() => {
-                btnText.textContent = 'Sent! ✅';
-                btnSpinner.classList.add('hidden');
-                submitBtn.disabled = false;
-                formStatus.className = 'text-center text-sm text-green-600 mt-3';
-                formStatus.textContent = 'Message sent successfully!';
-                contactForm.reset();
-                setTimeout(() => {
-                    btnText.textContent = 'Send Message';
-                    formStatus.className = 'text-center text-sm hidden';
-                }, 5000);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                btnText.textContent = 'Send Message';
-                btnSpinner.classList.add('hidden');
-                submitBtn.disabled = false;
-                formStatus.className = 'text-center text-sm text-red-500 mt-3';
-                formStatus.textContent = 'Failed to send message. Please try again.';
-            });
-    });
-}
