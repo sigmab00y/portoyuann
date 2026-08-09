@@ -554,7 +554,7 @@ if (contactForm) {
         const btnSpinner = document.getElementById('btn-spinner');
         
         btn.disabled = true;
-        btnText.textContent = 'sending...';
+        btnText.textContent = 'Sending...';
         btnSpinner.classList.remove('hidden');
         
         const templateParams = {
@@ -564,10 +564,10 @@ if (contactForm) {
 
             to_name: 'Muhammad Yuan',
             reply_to: email,
-            subject: `Pesan dari ${name} - Yuan`
+            subject: `Message from ${name} - Yuan`
         };
         
-        console.log('📤 sending email with parameters:', templateParams);
+        console.log('📤 Sending email with parameters:', templateParams);
         console.log('📤 Service ID:', EMAILJS_CONFIG.serviceID);
         console.log('📤 Template ID:', EMAILJS_CONFIG.templateID);
         
