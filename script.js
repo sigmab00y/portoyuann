@@ -535,7 +535,6 @@ const EMAILJS_CONFIG = {
 })();
 
 const contactForm = document.getElementById('contact-form');
-const formStatus = document.getElementById('form-status');
 
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
@@ -546,7 +545,7 @@ if (contactForm) {
         const message = document.getElementById('message').value.trim();
         
         if (!name || !email || !message) {
-            showFormStatus('⚠️ please fill in all fields', 'error');
+            showFormStatus('⚠️ Please fill in all fields!', 'error');
             return;
         }
         
@@ -555,17 +554,22 @@ if (contactForm) {
         const btnSpinner = document.getElementById('btn-spinner');
         
         btn.disabled = true;
-        btnText.textContent = 'Sending...';
+        btnText.textContent = 'sending...';
         btnSpinner.classList.remove('hidden');
-        formStatus.classList.add('hidden');
         
         const templateParams = {
             from_name: name,
             from_email: email,
             message: message,
+
             to_name: 'Muhammad Yuan',
-            reply_to: email
+            reply_to: email,
+            subject: `Pesan dari ${name} - Yuan`
         };
+        
+        console.log('📤 sending email with parameters:', templateParams);
+        console.log('📤 Service ID:', EMAILJS_CONFIG.serviceID);
+        console.log('📤 Template ID:', EMAILJS_CONFIG.templateID);
         
         emailjs.send(
             EMAILJS_CONFIG.serviceID,
@@ -573,11 +577,11 @@ if (contactForm) {
             templateParams
         )
         .then(function(response) {
-            console.log('SUCCESS!', response.status, response.text);
+            console.log('✅ SUCCESS!', response.status, response.text);
             showFormStatus('✅ Message sent successfully!', 'success');
             contactForm.reset();
             
-            btnText.textContent = 'Sent!';
+            btnText.textContent = '✅ Sent!';
             btn.style.backgroundColor = '#27ae60';
             setTimeout(() => {
                 btnText.textContent = 'Send Message';
@@ -585,9 +589,10 @@ if (contactForm) {
                 btn.disabled = false;
                 btnSpinner.classList.add('hidden');
             }, 3000);
-        }, function(error) {
-            console.error('FAILED...', error);
-            showFormStatus('Failed to send message. Please try again or contact me directly via email.', 'error');
+        })
+        .catch(function(error) {
+            console.error('❌ FAILED...', error);
+            showFormStatus('❌ Failed to send message. ' + (error.text || 'Please try again'), 'error');
             btnText.textContent = 'Send Message';
             btn.disabled = false;
             btnSpinner.classList.add('hidden');
@@ -604,6 +609,6 @@ function showFormStatus(message, type) {
     if (type === 'success') {
         setTimeout(() => {
             status.classList.add('hidden');
-        }, 10000);
+        }, 5000);
     }
 }
