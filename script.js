@@ -303,38 +303,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-const contactForm = document.getElementById('contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const message = document.getElementById('message').value.trim();
-        
-        if (!name || !email || !message) {
-            alert('Harap isi semua field!');
-            return;
-        }
-        
-        const subject = `Pesan dari ${name} - Yuan`;
-        const body = `Nama: ${name}%0AEmail: ${email}%0A%0APesan:%0A${message}`;
-        
-        window.location.href = `mailto:muhammadyuanisma@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
-        
-        contactForm.reset();
-        
-        const btn = contactForm.querySelector('button[type="submit"]');
-        const originalText = btn.textContent;
-        btn.textContent = '✅ Terkirim!';
-        btn.style.backgroundColor = '#27ae60';
-        setTimeout(() => {
-            btn.textContent = originalText;
-            btn.style.backgroundColor = '';
-        }, 3000);
-    });
-}
-
 let lastScrollY = window.scrollY;
 let scrollDirection = 'down';
 
@@ -552,3 +520,90 @@ function createParticles() {
     }
 }
 createParticles();
+
+const EMAILJS_CONFIG = {
+    publicKey: 'JOli6OA0RA_0BFyV1', 
+    serviceID: 'service_qcolxjk', 
+    templateID: 'template_k39xaxe' 
+};
+
+
+(function() {
+    emailjs.init({
+        publicKey: EMAILJS_CONFIG.publicKey,
+    });
+})();
+
+const contactForm = document.getElementById('contact-form');
+const formStatus = document.getElementById('form-status');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('user_name').value.trim();
+        const email = document.getElementById('user_email').value.trim();
+        const message = document.getElementById('message').value.trim();
+        
+        if (!name || !email || !message) {
+            showFormStatus('⚠️ please fill in all fields', 'error');
+            return;
+        }
+        
+        const btn = document.getElementById('submit-btn');
+        const btnText = document.getElementById('btn-text');
+        const btnSpinner = document.getElementById('btn-spinner');
+        
+        btn.disabled = true;
+        btnText.textContent = 'Sending...';
+        btnSpinner.classList.remove('hidden');
+        formStatus.classList.add('hidden');
+        
+        const templateParams = {
+            from_name: name,
+            from_email: email,
+            message: message,
+            to_name: 'Muhammad Yuan',
+            reply_to: email
+        };
+        
+        emailjs.send(
+            EMAILJS_CONFIG.serviceID,
+            EMAILJS_CONFIG.templateID,
+            templateParams
+        )
+        .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
+            showFormStatus('✅ Message sent successfully!', 'success');
+            contactForm.reset();
+            
+            btnText.textContent = 'Sent!';
+            btn.style.backgroundColor = '#27ae60';
+            setTimeout(() => {
+                btnText.textContent = 'Send Message';
+                btn.style.backgroundColor = '';
+                btn.disabled = false;
+                btnSpinner.classList.add('hidden');
+            }, 3000);
+        }, function(error) {
+            console.error('FAILED...', error);
+            showFormStatus('Failed to send message. Please try again or contact me directly via email.', 'error');
+            btnText.textContent = 'Send Message';
+            btn.disabled = false;
+            btnSpinner.classList.add('hidden');
+        });
+    });
+}
+
+function showFormStatus(message, type) {
+    const status = document.getElementById('form-status');
+    status.textContent = message;
+    status.className = 'text-center text-sm mt-3 ' + (type === 'success' ? 'text-green-600' : 'text-red-500');
+    status.classList.remove('hidden');
+    
+    if (type === 'success') {
+        setTimeout(() => {
+            status.classList.add('hidden');
+        }, 10000);
+    }
+}
